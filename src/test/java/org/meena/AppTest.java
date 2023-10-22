@@ -1,4 +1,4 @@
-package org.meena;
+package com.meena;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

@@ -1,4 +1,4 @@
-package org.meena;
+package com.meena;
 
 public class CricketMatchDashboardAppTest {
 

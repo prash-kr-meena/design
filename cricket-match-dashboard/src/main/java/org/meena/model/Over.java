@@ -1,4 +1,4 @@
-package org.meena.model;
+package com.meena.model;
 
 public record Over(
   int number,

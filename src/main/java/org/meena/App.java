@@ -1,4 +1,4 @@
-package org.meena;
+package com.meena;
 
 /**
  * Hello world!
