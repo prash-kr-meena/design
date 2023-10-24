@@ -1,6 +1,6 @@
 package com.meena.threads;
 
-import com.meena.ThreadUtil;
+import com.meena.ThreadUtils;
 
 /*
   Stop a Thread
@@ -24,7 +24,7 @@ public class StoppingAThread {
     Thread thread = new Thread(myStopableRunnable);
     thread.start();
 
-    ThreadUtil.sleep(5000);
+    ThreadUtils.sleep(5000);
     myStopableRunnable.doStop();
   }
 
@@ -56,7 +56,7 @@ class MyStopableRunnable implements Runnable {
     System.out.println("Thread: " + Thread.currentThread().getName() + " STARTED");
     while (!isStopped()) {
       System.out.println("Thread: " + Thread.currentThread().getName() + " running!");
-      ThreadUtil.sleep(1000);
+      ThreadUtils.sleep(1000);
     }
     System.out.println("Thread: " + Thread.currentThread().getName() + " STOPPED");
   }

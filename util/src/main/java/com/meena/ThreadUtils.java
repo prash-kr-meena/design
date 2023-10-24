@@ -1,6 +1,6 @@
 package com.meena;
 
-public class ThreadUtil {
+public class ThreadUtils {
 
   public static void sleep(long millis) {
     try {

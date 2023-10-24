@@ -1,6 +1,7 @@
 package com.meena.threads;
 
-import com.meena.ThreadUtil;
+
+import com.meena.ThreadUtils;
 
 public class PausingAThread {
 
@@ -14,7 +15,7 @@ public class PausingAThread {
     Thread thread = new Thread(() -> {
       System.out.println("Thread: " + Thread.currentThread().getName() + " running");
       System.out.println("Thread: " + Thread.currentThread().getName() + " pausing");
-      ThreadUtil.sleep(3000);
+      ThreadUtils.sleep(3000);
       System.out.println("Thread: " + Thread.currentThread().getName() + " completed");
     });
     thread.start();

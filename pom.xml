@@ -13,6 +13,7 @@
   <modules>
     <module>cricket-match-dashboard</module>
     <module>concurrency-and-multithreading</module>
+    <module>util</module>
   </modules>
 
   <properties>

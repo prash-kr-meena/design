@@ -1,6 +1,8 @@
 package com.meena.virtualthreads;
 
+import com.meena.ConsoleUtils;
 import java.util.stream.IntStream;
+import lombok.SneakyThrows;
 
 /*
   https://jenkov.com/tutorials/java-concurrency/java-virtual-threads.html
@@ -16,30 +18,49 @@ import java.util.stream.IntStream;
 */
 public class CreatingVirtualThread {
 
-  public static void main(String[] args) throws InterruptedException {
-    createPlatformThread();
-    //    createPlatformThreadViaFactory();
-    //    createVirtualThread();
+  public static void main(String[] args) {
+    Runnable runnable = () -> IntStream.rangeClosed(0, 5)
+      .forEach((i) -> System.out.println(i + " " + Thread.currentThread().getName()));
+
+    createPlatformThread(runnable);
+    ConsoleUtils.horizontalLine();
+    createPlatformThreadViaFactory(runnable);
+    ConsoleUtils.horizontalLine();
+    createVirtualThread(runnable);
 
   }
 
 
-  private static void createPlatformThread() {
-    Runnable runnable = () -> IntStream.rangeClosed(0, 5)
-      .forEach((i) -> System.out.println(i + " " + Thread.currentThread().getName()));
+  @SneakyThrows
+  private static void createPlatformThread(Runnable runnable) {
     Thread thread = new Thread(runnable);
     thread.start();       // Note: No need to join here
     System.out.println("Is Daemon : " + thread.isDaemon());
     System.out.println("Is Virtual : " + thread.isVirtual());
+
+    thread.join();  // I am adding join later on here, because I want to end this method here
+    // so that the thread in this does not interfere in the subsequence methods which I am calling in the main method.
+    // But for running this thread, join is not important, as these are not daemon threads.
+  }
+
+
+  @SneakyThrows
+  private static void createPlatformThreadViaFactory(Runnable runnable) {
+    Thread pThread = Thread.ofPlatform().start(runnable);// Creating and Starting at the same time
+    System.out.println("Is Daemon : " + pThread.isDaemon());
+    System.out.println("Is Virtual : " + pThread.isVirtual());
+
+    pThread.join();  // I am adding join later on here, because I want to end this method here
+    // so that the thread in this does not interfere in the subsequence methods which I am calling in the main method.
+    // But for running this thread, join is not important, as these are not daemon threads.
+
   }
 
 
   //  To create a new virtual thread in Java,
   //  you use the new Thread.ofVirtual() factory method, passing an implementation of the Runnable interface.
-  private static void createVirtualThread() throws InterruptedException {
-    Runnable runnable = () -> IntStream.rangeClosed(0, 5)
-      .forEach((i) -> System.out.println(i + " " + Thread.currentThread().getName()));
-
+  @SneakyThrows
+  private static void createVirtualThread(Runnable runnable) {
     Thread vThread = Thread.ofVirtual().start(runnable);  // Creating and Starting at the same time
 
     System.out.println("Is Daemon : " + vThread.isDaemon());

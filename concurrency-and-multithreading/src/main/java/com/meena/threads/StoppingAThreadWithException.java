@@ -1,6 +1,7 @@
 package com.meena.threads;
 
-import com.meena.ThreadUtil;
+
+import com.meena.ThreadUtils;
 
 public class StoppingAThreadWithException {
 
@@ -28,11 +29,11 @@ public class StoppingAThreadWithException {
       System.out.println("Thread: " + Thread.currentThread().getName() + " STARTED");
       while (true) {
         System.out.println("Thread: " + Thread.currentThread().getName() + " running!");
-        ThreadUtil.sleep(1000);
+        ThreadUtils.sleep(1000);
       }
     });
     thread.start();
-    ThreadUtil.sleep(5000);
+    ThreadUtils.sleep(5000);
     System.out.println("Main thread interrupting thread");
     thread.interrupt();
     System.out.println("Main thread interrupting thread - DONE");
