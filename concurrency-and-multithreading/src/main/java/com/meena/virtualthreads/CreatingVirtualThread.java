@@ -26,7 +26,9 @@ public class CreatingVirtualThread {
     ConsoleUtils.horizontalLine();
     createPlatformThreadViaFactory(runnable);
     ConsoleUtils.horizontalLine();
-    createVirtualThread(runnable);
+    createVirtualThreadWhichStartsImmediately(runnable);
+    ConsoleUtils.horizontalLine();
+    createVirtualThreadWhichDoesNotStartsImmediately(runnable);
 
   }
 
@@ -60,15 +62,30 @@ public class CreatingVirtualThread {
   //  To create a new virtual thread in Java,
   //  you use the new Thread.ofVirtual() factory method, passing an implementation of the Runnable interface.
   @SneakyThrows
-  private static void createVirtualThread(Runnable runnable) {
-    Thread vThread = Thread.ofVirtual().start(runnable);  // Creating and Starting at the same time
+  private static void createVirtualThreadWhichStartsImmediately(Runnable runnable) {
+    Thread vThread = Thread.ofVirtual().name("vThread").start(runnable);  // Creating and Starting at the same time
 
     System.out.println("Is Daemon : " + vThread.isDaemon());
     System.out.println("Is Virtual : " + vThread.isVirtual());
+
+    // You can join a virtual thread just like a platform thread - which means waiting until the virtual thread
+    // has finished its work and stopped executing.
+
+    vThread.join(); // If you don't join it, JVM will not wait for them to finish.
+    // They behave like the daemon threads, as in case of platform thread even if the main thread is finished
+    // the JVM will still be running for the other platform threads to finish.
+
+  }
+
+
+  @SneakyThrows
+  private static void createVirtualThreadWhichDoesNotStartsImmediately(Runnable runnable) {
+    Thread vThread = Thread.ofVirtual().name("vThread").unstarted(runnable);// Creating the thread, but not Starting it
+    vThread.start();
+
     vThread.join(); // If you don't join it, JVM will not wait for them to finish.
     // They behave like the daemon threads, as in case of platform thread even if the main thread is finished
     // the JVM will still be running for the other platform threads to finish.
   }
-
 
 }
